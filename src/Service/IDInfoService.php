@@ -93,6 +93,9 @@ class IDInfoService
 
         $m->age = self::getAge(substr($id, 6, 8));
 
+        $m->sex = self::getSex($id);
+
+
         return $m;
     }
 
@@ -102,5 +105,11 @@ class IDInfoService
         $now = Carbon::now();
 
         return $now->diffInYears($b);
+    }
+
+    private static function getSex($string)
+    {
+        $secondLastCharacter = substr($string, -2, 1);
+        return $secondLastCharacter%2 === 0 ? '女' : '男';
     }
 }

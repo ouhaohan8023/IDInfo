@@ -16,5 +16,19 @@ php artisan vendor:publish --provider="Ouhaohan8023\IDInfo\IDInfoServiceProvider
 ### 使用
 
 ```php
+$id = '132235196706122646';
+$m = IDInfoFacade::info($id);
+dd($m);
+dd($m->getProvince());
 
+Ouhaohan8023\IDInfo\Model\IDInfoModel {
+  +"province_code": 130000
+  +"city_code": 132200
+  +"area_code": 132235
+  +"province": "xx省"
+  +"city": "xx市"
+  +"area": "xx县"
+  +"age": 18
+  +"sex": "男"
+}
 ```

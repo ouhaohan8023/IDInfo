@@ -23,4 +23,9 @@ class IDInfoModel
     {
         return $this->age;
     }
+
+    public function getSex()
+    {
+        return $this->sex;
+    }
 }
