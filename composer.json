@@ -1,0 +1,28 @@
+{
+    "name": "ouhaohan8023/id-info",
+    "description": "chinese id card info for laravel",
+    "keywords": ["rbac"],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "OHH",
+            "email": "mrmercury@foxmail.com"
+        }
+    ],
+    "type": "library",
+    "autoload": {
+        "psr-4": {
+            "Ouhaohan8023\\IDInfo\\": "src/"
+        }
+    },
+    "require": {
+        "php": "^8.1"
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Ouhaohan8023\\IDInfo\\IDInfoServiceProvider"
+            ]
+        }
+    }
+}
