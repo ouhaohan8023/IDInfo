@@ -3,6 +3,7 @@
 namespace Ouhaohan8023\IDInfo\Service;
 
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Log;
 use Ouhaohan8023\IDInfo\Model\IDInfoModel;
 use Ouhaohan8023\IDInfo\Model\Xzqh;
 
@@ -12,8 +13,8 @@ class IDInfoService
     {
         $file = __DIR__.'/../Data/2022xzqh';
         $data = file_get_contents($file);
-        self::getProvince($data);
-        self::getCity($data);
+        //        self::getProvince($data);
+        //        self::getCity($data);
         self::getArea($data);
         echo 'ok';
     }
@@ -58,6 +59,7 @@ class IDInfoService
     {
         $pattern = '/\d{6}\t   [\x{4e00}-\x{9fa5}]+\n/u';
         preg_match_all($pattern, $data, $matches);
+
         foreach ($matches[0] as $v) {
             $pattern = '/(\d{6})\t   (.*?)\n/';
             preg_match_all($pattern, $v, $m);
@@ -66,15 +68,27 @@ class IDInfoService
             $firstFourDigits = substr($code, 0, 4);
             $p = Xzqh::query()->where('code', $firstFourDigits.'00')->first();
             $s = Xzqh::query()->where('code', $firstTwoDigits.'0000')->first();
-            if ($p) {
-                Xzqh::query()->firstOrCreate([
-                    'code' => $m[1][0],
-                    'title' => $m[2][0],
-                    'type' => 2,
-                    'parent_id' => $p->id,
-                    'superior_id' => $s->id,
-                ]);
+            try {
+                if ($p) {
+                    Xzqh::query()->firstOrCreate([
+                        'code' => $m[1][0],
+                        'title' => $m[2][0],
+                        'type' => 2,
+                        'parent_id' => $p->id,
+                        'superior_id' => $s->id,
+                    ]);
+                } elseif ($s) {
+                    Xzqh::query()->firstOrCreate([
+                        'code' => $m[1][0],
+                        'title' => $m[2][0],
+                        'type' => 2,
+                        'parent_id' => $s->id,
+                    ]);
+                }
+            } catch (\Exception $e) {
+                Log::error('初始化部分失败', [$e->getMessage()]);
             }
+
         }
     }
 
@@ -95,7 +109,6 @@ class IDInfoService
 
         $m->sex = self::getSex($id);
 
-
         return $m;
     }
 
@@ -110,6 +123,7 @@ class IDInfoService
     private static function getSex($string)
     {
         $secondLastCharacter = substr($string, -2, 1);
-        return $secondLastCharacter%2 === 0 ? '女' : '男';
+
+        return $secondLastCharacter % 2 === 0 ? '女' : '男';
     }
 }
