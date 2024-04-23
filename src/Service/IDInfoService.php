@@ -13,8 +13,8 @@ class IDInfoService
     {
         $file = __DIR__.'/../Data/2022xzqh';
         $data = file_get_contents($file);
-        //        self::getProvince($data);
-        //        self::getCity($data);
+        self::getProvince($data);
+        self::getCity($data);
         self::getArea($data);
         echo 'ok';
     }
@@ -97,6 +97,9 @@ class IDInfoService
         $six = substr($id, 0, 6);
         $q = Xzqh::query()->with(['parent', 'superior'])->where('code', $six)->first();
 
+        if (!$q) {
+            throw new \Exception('未找到对应的行政区划');
+        }
         $m = new IDInfoModel();
         if ($q->superior) {
             $m->province_code = $q->superior->code;
