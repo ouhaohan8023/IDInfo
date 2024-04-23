@@ -98,10 +98,15 @@ class IDInfoService
         $q = Xzqh::query()->with(['parent', 'superior'])->where('code', $six)->first();
 
         $m = new IDInfoModel();
-        $m->province_code = $q->superior->code;
+        if ($q->superior) {
+            $m->province_code = $q->superior->code;
+            $m->province = $q->superior->title;
+        } else {
+            $m->province_code = $q->parent->code;
+            $m->province = $q->code;
+        }
         $m->city_code = $q->parent->code;
         $m->area_code = $q->code;
-        $m->province = $q->superior->title;
         $m->city = $q->parent->title;
         $m->area = $q->title;
 
