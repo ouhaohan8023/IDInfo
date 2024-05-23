@@ -28,4 +28,9 @@ class IDInfoModel
     {
         return $this->sex;
     }
+
+    public function getZodiac()
+    {
+        return $this->zodiac;
+    }
 }

@@ -30,5 +30,6 @@ Ouhaohan8023\IDInfo\Model\IDInfoModel {
   +"area": "xx县"
   +"age": 18
   +"sex": "男"
+  +"zodiac": "猴"
 }
 ```

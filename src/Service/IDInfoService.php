@@ -117,6 +117,8 @@ class IDInfoService
 
         $m->sex = self::getSex($id);
 
+        $m->zodiac = self::getZodiac($id);
+
         return $m;
     }
 
@@ -133,5 +135,19 @@ class IDInfoService
         $secondLastCharacter = substr($string, -2, 1);
 
         return $secondLastCharacter % 2 === 0 ? '女' : '男';
+    }
+
+    private static function getZodiac($string)
+    {
+        $birthYear = substr($string, 6, 4);
+        $startYear = 1900;
+        $zodiacs = ['鼠', '牛', '虎', '兔', '龙', '蛇', '马', '羊', '猴', '鸡', '狗', '猪'];
+
+        if (is_numeric($birthYear)) {
+            $index = ($birthYear - $startYear) % 12;
+            return $zodiacs[$index];
+        }
+
+        return null;
     }
 }
