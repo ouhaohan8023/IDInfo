@@ -14,6 +14,10 @@ class IDInfo
     public static function info($id)
     {
         return IDInfoService::info($id);
+    }
 
+    public static function check18($id)
+    {
+        return IDInfoService::check18($id);
     }
 }

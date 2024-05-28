@@ -16,6 +16,7 @@ php artisan vendor:publish --provider="Ouhaohan8023\IDInfo\IDInfoServiceProvider
 ### 使用
 
 ```php
+// 获取身份证信息
 $id = '132235196706122646';
 $m = IDInfoFacade::info($id);
 dd($m);
@@ -32,4 +33,9 @@ Ouhaohan8023\IDInfo\Model\IDInfoModel {
   +"sex": "男"
   +"zodiac": "猴"
 }
+
+// 检查18位身份证是否合法
+$str = "141031199604270069";
+$d = IDInfoFacade::check18($str); // bool
+dd($d);
 ```
