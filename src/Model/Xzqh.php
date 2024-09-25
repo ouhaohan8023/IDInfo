@@ -25,4 +25,9 @@ class Xzqh extends Model
     {
         return $this->belongsTo(Xzqh::class, 'superior_id');
     }
+
+    public function children()
+    {
+        return $this->hasMany(Xzqh::class, 'parent_id','id');
+    }
 }
